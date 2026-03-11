@@ -1,6 +1,8 @@
 #include <Servo.h>
 #include <Arduino.h>
 
+#include <micro_ros_arduino.h>
+
 // Pin definitions
 const int pwmPin = 25;          // PWM output to ESC
 const int ledPin = 13;          // Onboard LED
