@@ -1,7 +1,7 @@
 #include <Servo.h>
 #include <Arduino.h>
 
-#include <micro_ros_arduino.h>
+//#include <micro_ros_arduino.h>
 
 // Pin definitions
 const int pwmPin = 25;          // PWM output to ESC
@@ -21,7 +21,6 @@ const int pulseMax = 1900;      // full forward
 // 
 //================================================================================
 */
-
 // Thruster run parameters
 const int runAngle = 180;
 const unsigned long runDuration = 5000; // 5 seconds
@@ -104,7 +103,7 @@ void runTest(const RateTest& test, int pulseWidth) {
 
 void setup() {
   //Serial.begin(115200);
-  while (!Serial); // Wait for serial port (optional, for native USB)
+  //while (!Serial); // Wait for serial port (optional, for native USB)
   pinMode(ledPin, OUTPUT);
   digitalWrite(ledPin, HIGH);   // LED on = system powered
 
