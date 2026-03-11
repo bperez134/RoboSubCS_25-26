@@ -9,7 +9,7 @@ const int ledPin = 13;          // Onboard LED
 const int pulseMin = 1100;      // full reverse
 const int pulseNeutral = 1500;  // stop
 const int pulseMax = 1900;      // full forward
-
+/*
 //================================================================================
 // runAngle Range
 // 0 - Full Reverse, 90 - Stop, 180 - Full Forward
@@ -18,6 +18,7 @@ const int pulseMax = 1900;      // full forward
 // 1100 - Full Reverse, 1500 - Stop, 1900 - Full Forward
 // 
 //================================================================================
+*/
 
 // Thruster run parameters
 const int runAngle = 180;
@@ -40,11 +41,10 @@ RateTest rateTests[] = {
   {"Extreme",      500, 2000}     // 500 Hz
 };
 
-
 const int numTests = sizeof(rateTests) / sizeof(rateTests[0]);
 
 Servo thruster;
-
+/*
 //================================================================================
 // map Function
 // 
@@ -54,7 +54,7 @@ Servo thruster;
 // angle - range = 0 - 180
 //         Where: 0 - Full Reverse, 90 - Stop, 180 - Full Forward
 //================================================================================
-
+*/
 // Helper to convert angle back to pulse width (for display)
 int angleToPulse(int angle) {
   return map(angle, 0, 180, pulseMin, pulseMax);
