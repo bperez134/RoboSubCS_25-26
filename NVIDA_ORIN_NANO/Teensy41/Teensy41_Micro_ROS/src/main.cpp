@@ -61,11 +61,6 @@ int angleToPulse(int angle) {
 }
 
 void runTest(const RateTest& test, int pulseWidth) {
-  Serial.print("\n=== Testing ");
-  Serial.print(test.name);
-  Serial.print(" (");
-  Serial.print(test.frequencyHz);
-  Serial.println(" Hz) ===");
   
   digitalWrite(ledPin, HIGH);  // LED on during test
   
@@ -89,13 +84,6 @@ void runTest(const RateTest& test, int pulseWidth) {
     if (millis() - lastPrintTime >= 1000) {
       lastPrintTime = millis();
       float elapsedSec = (micros() - startTime) / 1000000.0;
-      Serial.print("  Time: ");
-      Serial.print(elapsedSec, 1);
-      Serial.print("s, Writes: ");
-      Serial.print(actualIterations);
-      Serial.print(", Current rate: ");
-      Serial.print(actualIterations / elapsedSec, 1);
-      Serial.println(" Hz");
     }
     
     // Precise timing delay
@@ -108,34 +96,13 @@ void runTest(const RateTest& test, int pulseWidth) {
   unsigned long totalTime = micros() - startTime;
   float actualRate = (actualIterations * 1000000.0) / totalTime;
   
-  Serial.print("  Test complete - ");
-  Serial.print("Actual rate: ");
-  Serial.print(actualRate, 1);
-  Serial.print(" Hz, Total writes: ");
-  Serial.println(actualIterations);
-  
   digitalWrite(ledPin, LOW);
   delay(2000);  // Pause between tests
 }
 
 void setup() {
-  Serial.begin(115200);
+  //Serial.begin(115200);
   while (!Serial); // Wait for serial port (optional, for native USB)
-
-  Serial.println("Thruster Rate Testing Starting...");
-  Serial.println("=================================");
-  
-  // Display pulse width mapping
-  Serial.print("Pulse range: ");
-  Serial.print(pulseMin);
-  Serial.print(" - ");
-  Serial.print(pulseMax);
-  Serial.println(" µs");
-  Serial.print("Test pulse: ");
-  Serial.print(angleToPulse(runAngle));
-  Serial.println(" µs (~1600 µs forward)");
-  Serial.println("=================================\n");
-
   pinMode(ledPin, OUTPUT);
   digitalWrite(ledPin, HIGH);   // LED on = system powered
 
@@ -143,20 +110,13 @@ void setup() {
   thruster.attach(pwmPin, pulseMin, pulseMax);
 
   // Set neutral (1500 µs) to arm the ESC
-  Serial.println("Arming ESC...");
   thruster.writeMicroseconds(pulseNeutral);
   delay(5000);                  // arming delay
-  Serial.println("ESC armed.\n");
 
   int testPulse = angleToPulse(runAngle);
   
   // Run through all rate tests
   for (int i = 0; i < numTests; i++) {
-    Serial.print("\nPreparing test ");
-    Serial.print(i + 1);
-    Serial.print(" of ");
-    Serial.println(numTests);
-    
     // Return to neutral between tests
     thruster.writeMicroseconds(pulseNeutral);
     delay(2000);
@@ -167,16 +127,9 @@ void setup() {
   
   // Stop thruster
   thruster.writeMicroseconds(pulseNeutral);
-  Serial.println("\nAll tests complete - thruster stopped.");
 
   digitalWrite(ledPin, LOW);
   
-  // Print summary
-  Serial.println("\n=== Test Summary ===");
-  Serial.println("Rate (Hz) | Actual (Hz) | Status");
-  Serial.println("----------|-------------|--------");
-  // Note: Actual rates were printed during tests
-  Serial.println("\nCheck serial output above for detailed results.");
 }
 
 void loop() {
